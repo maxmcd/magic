@@ -16,6 +16,10 @@ var Magician = database.define('magicians', {
 
 Magician.sync({force: true}).then(function () {
   // Table created
+    return Magician.create({
+        email: 'hello@hello.com',
+        password: 'password'
+    });
 });
 
 module.exports = Magician;
