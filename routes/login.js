@@ -9,11 +9,13 @@ router.get('/', function(req, res, next) {
 
 router.post('/', function(req, res, next) {
     Magician.find({ where: {email: req.body.email} }).then(function(magician) {
+        if (magician == null) {
+            res.redirect('/login');
+        }
         bcrypt.compare(req.body.password, magician.password, function(err, match) {
             if (match == true) {
                 res.redirect('/dashboard');
             } else {
-                console.log('fail auth');
                 res.redirect('/login');
             }
         });
