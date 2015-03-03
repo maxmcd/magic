@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var bcrypt = require('bcrypt');
+var Magician = require('../models/magicians');
 
 router.get('/', function(req, res, next) {
     res.render('magicians', { title: 'Express' });
@@ -12,7 +13,11 @@ router.post('/', function(req, res, next) {
         var password = req.params.password;
         bcrypt.genSalt(10, function(err, salt) {
             bcrypt.hash(password, salt, function(err, hash) {
-                
+                magician = Magician.build({
+                    email: email,
+                    password: hash
+                });
+                magician.save()
             });
         });
     }
