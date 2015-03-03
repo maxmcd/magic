@@ -9,7 +9,13 @@ router.get('/', function(req, res, next) {
 router.post('/', function(req, res, next) {
     if (req.params.newMagician != null) {
         var email = req.params.email;
-    }    
+        var password = req.params.password;
+        bcrypt.genSalt(10, function(err, salt) {
+            bcrypt.hash(password, salt, function(err hash) {
+                
+            });
+        });
+    }
 });
 
 
