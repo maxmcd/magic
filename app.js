@@ -4,6 +4,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var lessMiddleware = require('less-middleware');
+
 
 var User = require('./models/users')
 
@@ -12,6 +14,13 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+
+
+// less middleware setup
+
+app.use(lessMiddleware(__dirname + '/public'));
+app.use(express.static(__dirname + '/public'));
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

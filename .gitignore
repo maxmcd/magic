@@ -1,3 +1,7 @@
+# generated css files
+public/stylesheets/*.css
+
+
 # Logs
 logs
 *.log
