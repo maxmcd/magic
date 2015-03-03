@@ -1,5 +1,6 @@
 var Sequelize = require('sequelize')
 var database = require('../database')
+var bcrypt = require('bcrypt')
 
 var Magician = database.define('magicians', {
     email: {
@@ -15,10 +16,13 @@ var Magician = database.define('magicians', {
 });
 
 Magician.sync({force: true}).then(function () {
-  // Table created
-    return Magician.create({
-        email: 'hello@hello.com',
-        password: 'password'
+    bcrypt.genSalt(10, function(err, salt) {
+        bcrypt.hash('password', salt, function(err, hash) {
+            return Magician.create({
+                email: 'hello@hello.com',
+                password: hash
+            });
+        });
     });
 });
 
