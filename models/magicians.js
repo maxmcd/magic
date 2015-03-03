@@ -4,7 +4,7 @@ var database = require('../database')
 var Magician = database.define('magicians', {
     email: {
         type: Sequelize.STRING,
-        field: 'email''
+        field: 'email'
     },
     password: {
         type: Sequelize.STRING,
