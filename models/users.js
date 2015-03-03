@@ -6,6 +6,14 @@ var User = database.define('users', {
         type: Sequelize.STRING,
         field: 'stripe_id'
     },
+    username: {
+        type: Sequelize.STRING,
+        field: 'username'
+    },
+    password: {
+        type: Sequelize.STRING,
+        field: 'password'
+    },
     phoneNumber: {
         type: Sequelize.STRING,
         field: 'phone_number'
