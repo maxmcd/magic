@@ -11,3 +11,12 @@ block content
                     label(for="password") Password
                     input.u-full-width(type="password" name="password" id="password")
                     input(type="submit" value="Login")
+        if magicians
+            .row
+                table.u-full-width
+                    thead
+                        tr
+                            th Email
+                    tbody
+                        each magician in magicians
+                            td= magician.email
