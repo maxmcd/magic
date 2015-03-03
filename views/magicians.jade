@@ -10,13 +10,14 @@ block content
                     input.u-full-width(type="email" name="email" id="email" autofocus="true")
                     label(for="password") Password
                     input.u-full-width(type="password" name="password" id="password")
-                    input(type="submit" value="Login")
+                    input(type="submit" value="Create")
         if magicians
             .row
                 table.u-full-width
                     thead
                         tr
                             th Email
-                    tbody
+                    tbody 
                         each magician in magicians
-                            td= magician.email
+                            tr
+                                td= magician.email

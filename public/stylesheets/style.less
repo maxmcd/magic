@@ -114,6 +114,9 @@ body {
         width: calc(~"100% - 570px");
         left: 320px;
         background-color: rgba(0, 0, 0, 0.2);
+        & > div {
+            height: 100%;
+        }
         .header {
             text-align: center;
             width: 100%;
@@ -126,16 +129,20 @@ body {
         }
         .body {
             height: calc(~"100% - 120px");
+            overflow-y: auto;
             .message-wrapper {
                 padding: 10px 10px 0 10px;
             }
-            .message {
+            .you, .me{
                 padding: 10px;
                 width: 100%;
                 border-radius: 5px;
-                background-color: #888;
             }            
-            .message.you {
+            .me {
+                color: white;
+                background-color: #303E4D;
+            }
+            .you {
                 background-color: #eee;
             }
         }
