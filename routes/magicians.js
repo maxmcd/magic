@@ -7,20 +7,24 @@ router.get('/', function(req, res, next) {
     res.render('magicians', { title: 'Express' });
 });
 
-router.post('/', function(req, res, next) {
-    if (req.params.newMagician != null) {
-        var email = req.params.email;
-        var password = req.params.password;
-        bcrypt.genSalt(10, function(err, salt) {
-            bcrypt.hash(password, salt, function(err, hash) {
-                magician = Magician.build({
-                    email: email,
-                    password: hash
-                });
-                magician.save()
+router.post('/add', function(req, res, next) {
+    console.log('h');
+    var email = req.body.email;
+    var password = req.body.password;
+    console.log(email, password);
+    bcrypt.genSalt(10, function(err, salt) {
+        console.log('e');
+        bcrypt.hash(password, salt, function(err, hash) {
+            console.log('l');
+            magician = Magician.build({
+                email: email,
+                password: hash
             });
+            magician.save()
+            res.redirect('/magicians');
+            console.log('o');
         });
-    }
+    });
 });
 
 
