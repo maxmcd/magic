@@ -13,6 +13,7 @@ var User = require('./models/users')
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var login = require('./routes/login');
+var magician = require('./routes/magicians');
 
 var app = express();
 
@@ -38,6 +39,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 app.use('/login', login);
+app.use('/magicians', magicians);
 
 
 // catch 404 and forward to error handler
