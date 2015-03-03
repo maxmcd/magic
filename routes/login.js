@@ -3,7 +3,7 @@ var router = express.Router();
 var bcrypt = require('bcrypt');
 
 router.get('/', function(req, res, next) {
-    res.render('login', { title: 'Express' });
+    res.render('login', { title: 'Login' });
 });
 
 router.post('/', function(req, res, next) {
@@ -11,7 +11,5 @@ router.post('/', function(req, res, next) {
 
     }    
 });
-
-
 
 module.exports = router;

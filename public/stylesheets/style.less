@@ -1,6 +1,13 @@
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
 body {
     padding-top: 50px;
-    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;    
+    font-family: 'Open Sans', sans-serif;
 }
 
 .homepage {
@@ -13,6 +20,27 @@ body {
     .number {
         color: green;
         font-weight: bold;
+    }
+}
+
+.dashboard {
+    .sidebar, .message, .info {
+        height: 100%;
+        position: absolute;
+        top: 0px; bottom: 0px;
+        border-right: 1px solid #999;
+    }
+    .sidebar {
+        left: 0px;
+        width: 320px;
+    }
+    .message {
+        width: calc(~"100% - 570px");
+        left: 320px;
+    }
+    .info {
+        right: 0px;
+        width: 250px;
     }
 }
 
