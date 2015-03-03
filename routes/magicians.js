@@ -11,7 +11,7 @@ router.post('/', function(req, res, next) {
         var email = req.params.email;
         var password = req.params.password;
         bcrypt.genSalt(10, function(err, salt) {
-            bcrypt.hash(password, salt, function(err hash) {
+            bcrypt.hash(password, salt, function(err, hash) {
                 
             });
         });

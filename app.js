@@ -13,7 +13,7 @@ var User = require('./models/users')
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var login = require('./routes/login');
-var magician = require('./routes/magicians');
+var magicians = require('./routes/magicians');
 
 var app = express();
 
