@@ -3,5 +3,49 @@ extends layout
 block content
     .dashboard
         .sidebar
-        .message
+            .header
+                h2.title Magic
+                button.add +
+            .message-list
+                .item
+                    h4 203-313-1234
+                        span.status.active active
+                    p lots oloasdflj asdfhasldkjfh asdlfjkh asdkfjhas dflkjhas dflkjahdsflkjashd fkjash lkfsjd 
+                .item.active
+                    h4 123-456-7890
+                        span.status.new new
+                    p body
+                .item
+                    h4 203-313-1234
+                        span.status.complete complete
+                    p body
+
+
+        .messages
+            .header 
+                h3.title
+                    | 123-456-7890
+
+            .body
+                .message-wrapper
+                    .message.you
+                        | Hi there
+                .message-wrapper
+                    .message.me
+                        | hi there
+            .input
+                input(type="text" autofocus="true")
         .info
+            form
+                label(for="name") Name
+                input.u-full-width(type="text" id="name")
+                label(for="address") Address
+                textarea.u-full-width(type="text" id="address")
+                label(for="notes") Notes
+                textarea.u-full-width(type="text" id="notes")
+                input(type="submit" value="update")
+            hr
+            form
+                label(for="amount") Charge
+                input.u-full-width(type="number" id="amount")
+                input(type="submit" value="charge")
