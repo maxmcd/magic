@@ -4,7 +4,7 @@ if (process.env.NODE_ENV == 'production') {
 
 } else {
     sequelize = new Sequelize(
-        'magic', 
+        'magictest', 
         null, 
         null, 
         {
