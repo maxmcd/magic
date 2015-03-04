@@ -49,8 +49,8 @@ if (document.getElementsByClassName('dashboard').length > 0) {
                     className: "me"
                 }]
             );
-            this.setState({items: nextItems, message: ''});
             sendMessage(this.state.message);
+            this.setState({items: nextItems, message: ''});
         },
         render: function() {
             return (
