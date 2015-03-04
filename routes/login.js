@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+
 var bcrypt = require('bcrypt');
 var Magician = require('../models/magicians');
 
@@ -14,6 +15,7 @@ router.post('/', function(req, res, next) {
         }
         bcrypt.compare(req.body.password, magician.password, function(err, match) {
             if (match == true) {
+                req.session.magician_id = magician.id;
                 res.redirect('/dashboard');
             } else {
                 res.redirect('/login');
