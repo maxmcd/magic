@@ -4,7 +4,7 @@ var sendMessage = function(msg) {
     socket.emit('message', {
         message: msg,
         magician: magician.id,
-        user: users.id
+        user: user.id
     });
 };
 
