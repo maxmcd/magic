@@ -36,6 +36,22 @@ if (document.getElementsByClassName('dashboard').length > 0) {
             this.refs.input.getDOMNode().focus();
         },
         getInitialState: function() {
+            var that = this;
+            socket.on("message", function(message) {
+                var className;
+                if (message.fromUser === true) {
+                    className = "you";
+                } else {
+                    className = "me";
+                }
+                var nextItems = that.state.items.concat(
+                    [{
+                        message: message.body,
+                        className: className
+                    }]
+                );
+                that.setState({items: nextItems, message: that.state.items.message});
+            });
             return {items: [], message: ''};
         },
         onChange: function(e) {
@@ -78,8 +94,10 @@ if (document.getElementsByClassName('dashboard').length > 0) {
         handleClick: function(thing) {
             user = this.state.user;
             this.props.updateFunction({
-                title: user.phoneNumber
+                title: user.phoneNumber,
+                user: user
             });
+            joinUser(user);
             console.log(this.props.user);
         },
         render: function() {
@@ -172,7 +190,8 @@ if (document.getElementsByClassName('dashboard').length > 0) {
                 message: '',
                 email: email,
                 messageData: {
-                    title: "hi"
+                    title: "hi",
+                    user: user
                 }
             };
         },

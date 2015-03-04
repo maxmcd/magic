@@ -4,7 +4,7 @@ var database = require('./database')
 var Message = database.define('messages', {
     body: {
         type: Sequelize.TEXT,
-        field: 'password'
+        field: 'body'
     },
     fromUser: {
         type: Sequelize.BOOLEAN,
