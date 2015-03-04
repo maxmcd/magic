@@ -5,6 +5,8 @@ var Magician = require('./magicians')
 var bcrypt = require('bcrypt')
 
 Magician.hasMany(User)
+Magician.hasMany(Message)
+User.hasMany(Message)
 
 sequelize.sync({force: true}).success(function() {
     console.log('sync done');

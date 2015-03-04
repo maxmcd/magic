@@ -1,17 +1,17 @@
-// var Sequelize = require('sequelize')
-// var database = require('../database')
+var Sequelize = require('sequelize')
+var database = require('./database')
 
-// var Magician = database.define('magicians', {
-//     email: {
-//         type: Sequelize.STRING,
-//         field: 'email'
-//     },
-//     password: {
-//         type: Sequelize.STRING,
-//         field: 'password'
-//     }
-// }, {
-//     freezeTableName: true 
-// });
+var Message = database.define('messages', {
+    body: {
+        type: Sequelize.TEXT,
+        field: 'password'
+    },
+    fromUser: {
+        type: Sequelize.BOOLEAN,
+        field: 'from_user'
+    }
+}, {
+    freezeTableName: true 
+});
 
-// module.exports = Magician;
+module.exports = Message;
