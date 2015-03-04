@@ -3,6 +3,7 @@ extends layout
 block content
     script.
         var users = !{JSON.stringify(users)}
+        var magician = !{JSON.stringify(magician)}
     .dashboard
         .sidebar
             .header
@@ -10,7 +11,7 @@ block content
                 button.add +
             .message-list
             .footer 
-                =magician.email
+                span.email=magician.email
                 | &nbsp;-&nbsp;
                 a(href="/login/quit") Sign out
 
