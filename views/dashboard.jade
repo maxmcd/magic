@@ -1,24 +1,14 @@
 extends layout
 
 block content
+    script.
+        var users = !{JSON.stringify(users)}
     .dashboard
         .sidebar
             .header
                 h2.title Magic
                 button.add +
             .message-list
-                .item
-                    h4 203-313-1234
-                        span.status.active active
-                    p lots oloasdflj asdfhasldkjfh asdlfjkh asdkfjhas dflkjhas dflkjahdsflkjashd fkjash lkfsjd 
-                .item.active
-                    h4 123-456-7890
-                        span.status.new new
-                    p body
-                .item
-                    h4 203-313-1234
-                        span.status.complete complete
-                    p body
             .footer 
                 =magician.email
                 | &nbsp;-&nbsp;
