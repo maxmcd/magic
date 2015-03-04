@@ -7,9 +7,9 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var lessMiddleware = require('less-middleware');
 
+require('./models/migrate')
 
 var User = require('./models/users')
-
 
 var routes = require('./routes/index');
 var users = require('./routes/users');

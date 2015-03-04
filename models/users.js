@@ -1,29 +1,21 @@
 var Sequelize = require('sequelize')
-var database = require('../database')
+var database = require('./database')
+var Magician = require('./magicians')
 
 var User = database.define('users', {
     stripeId: {
         type: Sequelize.STRING,
         field: 'stripe_id'
     },
-    username: {
-        type: Sequelize.STRING,
-        field: 'username'
-    },
-    password: {
-        type: Sequelize.STRING,
-        field: 'password'
-    },
     phoneNumber: {
         type: Sequelize.STRING,
         field: 'phone_number'
+    },
+    status: {
+        type: Sequelize.STRING
     }
 }, {
     freezeTableName: true 
-});
-
-User.sync({force: true}).then(function () {
-  // Table created
 });
 
 module.exports = User;
