@@ -51,6 +51,7 @@ if (document.getElementsByClassName('dashboard').length > 0) {
                 }]
             );
             this.setState({items: nextItems, message: ''});
+            sendMessage(this.state.message);
         },
         render: function() {
             return (

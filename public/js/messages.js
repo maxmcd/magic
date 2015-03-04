@@ -1,6 +1,6 @@
 var socket = io();
 
-var sendMessage = function() {
-    socket.emit('message', $('#magicianMsg').val());
-});
+var sendMessage = function(msg) {
+    socket.emit('message', msg);
+};
 
