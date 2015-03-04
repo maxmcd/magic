@@ -11,6 +11,15 @@ router.get('/', function(req, res, next) {
     });
 });
 
+router.get('/:id/users', function(req, res, next) {
+    var id = req.param('id');
+    Magician.find(id).then(function(magician) {
+        magician.getUsers().then(function(users) {
+            res.json(users);
+        });
+    });
+});
+
 router.post('/add', function(req, res, next) {
     var email = req.body.email;
     var password = req.body.password;
@@ -25,7 +34,5 @@ router.post('/add', function(req, res, next) {
         });
     });
 });
-
-
 
 module.exports = router;
