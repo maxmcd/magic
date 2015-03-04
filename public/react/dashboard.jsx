@@ -38,19 +38,21 @@ if (document.getElementsByClassName('dashboard').length > 0) {
         getInitialState: function() {
             var that = this;
             socket.on("message", function(message) {
-                var className;
-                if (message.fromUser === true) {
-                    className = "you";
-                } else {
-                    className = "me";
+                if (message.userId === user.id) {
+                    var className;
+                    if (message.fromUser === true) {
+                        className = "you";
+                    } else {
+                        className = "me";
+                    }
+                    var nextItems = that.state.items.concat(
+                        [{
+                            message: message.body,
+                            className: className
+                        }]
+                    );
+                    that.setState({items: nextItems, message: that.state.items.message});                    
                 }
-                var nextItems = that.state.items.concat(
-                    [{
-                        message: message.body,
-                        className: className
-                    }]
-                );
-                that.setState({items: nextItems, message: that.state.items.message});
             });
             return {items: [], message: ''};
         },
@@ -97,7 +99,6 @@ if (document.getElementsByClassName('dashboard').length > 0) {
                 title: user.phoneNumber,
                 user: user
             });
-            joinUser(user);
             console.log(this.props.user);
         },
         render: function() {
@@ -122,6 +123,7 @@ if (document.getElementsByClassName('dashboard').length > 0) {
         render: function() {
             var updateFunction = this.props.updateFunction;
             var createItem = function(user) {
+                joinUser(user);
                 return (
                     <SidebarMessage user={user} key={user.id} updateFunction={updateFunction} />
                 );

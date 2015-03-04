@@ -24,7 +24,7 @@ var seed = function() {
             }).then(function() {
                 User.create({
                     magicianId: 1,
-                    phoneNumber: "203-313-3999",
+                    phoneNumber: "+12033133609",
                     status: "active"
                 });
                 User.create({

@@ -14,6 +14,7 @@ var User = require('./models/users')
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var login = require('./routes/login');
+var twilio = require('./routes/twilio')
 var magicians = require('./routes/magicians');
 var dashboard = require('./routes/dashboard');
 
@@ -73,8 +74,13 @@ app.use(/\/(magicians|dashboard).*/, function(req, res, next) {
 app.use('/', routes);
 app.use('/users', users);
 app.use('/login', login);
+app.use('/twilio', twilio);
 app.use('/magicians', magicians);
 app.use('/dashboard', dashboard);
+
+app.obtainSocketIo = function(io) {
+    twilio.obtainSocketIo(io)
+}
 
 
 // catch 404 and forward to error handler
