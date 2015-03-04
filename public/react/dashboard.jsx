@@ -1,4 +1,4 @@
-var userId = 1; //placeholder
+var user = null;
 
 if (document.getElementsByClassName('dashboard').length > 0) {
     var Header = React.createClass({
@@ -6,8 +6,7 @@ if (document.getElementsByClassName('dashboard').length > 0) {
             return (
                 <div className="header">
                     <h3 classNma="title">
-                        203-323-3609
-                        {}
+                        {this.props.data}
                     </h3>
                 </div>
             );
@@ -19,15 +18,15 @@ if (document.getElementsByClassName('dashboard').length > 0) {
                 return (
                     <div className="message-wrapper">
                         <div className={messageObject.className}>
-                        {messageObject.message}
+                            {messageObject.message}
+                        </div>
                     </div>
+                );
+            };
+            return (
+                <div className="body">
+                    {this.props.items.map(createItem)}
                 </div>
-            );
-          };
-          return (
-            <div className="body">
-                {this.props.items.map(createItem)}
-            </div>
             );
         }
     });
@@ -56,7 +55,7 @@ if (document.getElementsByClassName('dashboard').length > 0) {
         render: function() {
             return (
                 <div className="messages">
-                    <Header />
+                    <Header data={this.props.data.title}/>
                     <MessageBody items={this.state.items} />
                     <div className="input">
                         <form onSubmit={this.handleSubmit}>
@@ -67,29 +66,50 @@ if (document.getElementsByClassName('dashboard').length > 0) {
             );
         }
     });
-    var MessageList = React.createClass({
+
+
+
+    var SidebarMessage = React.createClass({
+        getInitialState: function() {
+            return {
+                user: this.props.user
+            };
+        },
         handleClick: function(thing) {
-            console.log(thing);
+            user = this.state.user;
+            this.props.updateFunction({
+                title: user.phoneNumber
+            });
+            console.log(this.props.user);
         },
         render: function() {
-            var createItem = function(user) {
-                var classString = "status " + user.status;
+            var user = this.state.user;
+            var classString = "status " + user.status;
+            return (
+                <div className="item" data-id={user.id} onClick={this.handleClick}>
+                    <h4> {user.phoneNumber}
+                        <span className={classString}>
+                        {user.status}
+                        </span>
+                    </h4>
+                    <p>
+                        These are some words
+                    </p>
+                </div>
+            );
+        }
+    });
 
+    var SidebarMessageList = React.createClass({
+        render: function() {
+            var updateFunction = this.props.updateFunction;
+            var createItem = function(user) {
                 return (
-                    <div className="item" data-id={user.id} onClick={this.handleClick}>
-                        <h4> {user.phoneNumber}
-                            <span className={classString}>
-                            {user.status}
-                            </span>
-                        </h4>
-                        <p>
-                            These are some words
-                        </p>
-                    </div>
+                    <SidebarMessage user={user} key={user.id} updateFunction={updateFunction} />
                 );
             };
             return (
-                <div className="message-list">
+                <div className="message-list" onClick={this.handleClick}>
                     {users.map(createItem)}
                 </div>
             );
@@ -139,13 +159,21 @@ if (document.getElementsByClassName('dashboard').length > 0) {
     });
 
     var Dashboard = React.createClass({
+        updateMessages: function(messageData) {
+            var newState = this.state;
+            newState.messageData = messageData;
+            this.setState(newState);
+        },
         getInitialState: function() {
             var title = $('.header .title').text();
             var email = $('.footer .email').text();
             return {
                 title: title, 
                 message: '',
-                email: email
+                email: email,
+                messageData: {
+                    title: "hi"
+                }
             };
         },
         render: function() {
@@ -160,7 +188,7 @@ if (document.getElementsByClassName('dashboard').length > 0) {
                             +
                             </button>
                         </div>
-                        <MessageList />
+                        <SidebarMessageList updateFunction={this.updateMessages} />
                         <div className="footer">
                             <span className="email">
                                 {this.state.email}
@@ -169,7 +197,7 @@ if (document.getElementsByClassName('dashboard').length > 0) {
                             <a href="/login/quit">Sign out</a>
                         </div>
                     </div>
-                    <Messages />
+                    <Messages data={this.state.messageData}/>
                     <Info />
                 </div>
             );
@@ -178,6 +206,3 @@ if (document.getElementsByClassName('dashboard').length > 0) {
 
     React.render(<Dashboard />, document.getElementsByClassName('dashboard')[0]);
 }
-
-
-
