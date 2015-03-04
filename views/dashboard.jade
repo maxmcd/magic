@@ -19,7 +19,10 @@ block content
                     h4 203-313-1234
                         span.status.complete complete
                     p body
-            .footer= magician.email
+            .footer 
+                =magician.email
+                | &nbsp;-&nbsp;
+                a(href="/login/quit") Sign out
 
         .messages
             .header 

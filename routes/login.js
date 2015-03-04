@@ -8,6 +8,11 @@ router.get('/', function(req, res, next) {
     res.render('login', { title: 'Login' });
 });
 
+router.get('/quit', function(req, res, next) {
+    req.session.magician_id = null
+    res.redirect('/');
+});
+
 router.post('/', function(req, res, next) {
     Magician.find({ where: {email: req.body.email} }).then(function(magician) {
         if (magician == null) {
