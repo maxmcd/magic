@@ -19,7 +19,7 @@ module.exports = function(io) {
                 body: m.message
             }).then(function(message) {
                 twilio.sendMessage({
-                    from: '+16467601925', 
+                    from: process.env.MAGIC_PHONE_NUMBER_FORMATTED, 
                     to: m.user.phoneNumber, 
                     body: m.message 
                 }, function(err, responseData) { 

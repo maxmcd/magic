@@ -10,7 +10,8 @@ router.get('/', function(req, res, next) {
         res.render('dashboard', {
             magician: res.locals.magician,
             title: 'dashboard',
-            users: users
+            users: users,
+            displayTitle: process.env.MAGIC_NAME
         });
     })
 });

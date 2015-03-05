@@ -1,6 +1,21 @@
 #!/usr/bin/env node
 
 /**
+ * Set default config values
+ */
+var defaults = {
+    "MAGIC_NAME":"Magic",
+    "MAGIC_PHONE_NUMBER":"(646) 760-1925",
+    "MAGIC_PHONE_NUMBER_FORMATTED":"+16467601925"
+}
+for (var key in defaults) {
+    if (process.env[key] == undefined){
+        process.env[key] = defaults[key]
+    }
+}
+
+
+/**
  * Module dependencies.
  */
 

@@ -23,6 +23,9 @@ router.post('/:id/cc/', function(req, res, next) {
             res.json(true)           
         })
     })
+    // should alert a socket here that 
+    // the card is ready
+    // maybe just send a message?
 })
 
 router.post("/:id/charge/", function(req, res, next) {
