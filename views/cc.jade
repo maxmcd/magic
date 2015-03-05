@@ -1,0 +1,22 @@
+extends layout
+
+block content
+    script(src="https://checkout.stripe.com/checkout.js")
+    script.
+        var handler = StripeCheckout.configure({
+            key: 'pk_test_6pRNASCoBOKtIshFeQd4XMUh',
+            image: '//stripe.com/img/documentation/checkout/marketplace.png',
+            token: function(token) {
+                $.post('', {"token":token}, function(e) {
+                    alert(success)
+                })
+              // Use the token to create the charge with a server-side script.
+              // You can access the token ID with `token.id`
+            }
+        });
+        $(function() {
+            handler.open({
+                name: 'Magic',
+                description: ''
+            });
+        })
