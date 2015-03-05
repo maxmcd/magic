@@ -139,7 +139,7 @@ if (document.getElementsByClassName('dashboard').length > 0) {
     var UserForm = React.createClass({
         handleSubmit: function(e) {
             e.preventDefault();
-            $.post("/users/" + userId, {
+            $.post("/users/" + user.id, {
                 name: this.refs.name.getDOMNode().value,
                 address: this.refs.address.getDOMNode().value,
                 notes: this.refs.notes.getDOMNode().value
@@ -150,11 +150,11 @@ if (document.getElementsByClassName('dashboard').length > 0) {
             return (
                 <form onSubmit={this.handleSubmit}>
                     <label for="name">Name</label>
-                    <input type="text" ref="name" className="u-full-width" />
+                    <input type="text" name="name" ref="name" className="u-full-width" />
                     <label for="address">Address</label>
-                    <textarea type="text" ref="address" className="u-full-width"></textarea>
+                    <textarea type="text" name="address" ref="address" className="u-full-width"></textarea>
                     <label for="notes">Notes</label>
-                    <textarea type="text" ref="notes" className="u-full-width"></textarea>
+                    <textarea type="text" name="notes" ref="notes" className="u-full-width"></textarea>
                     <input type="submit" value="update" />
                 </form>
             );

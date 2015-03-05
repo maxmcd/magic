@@ -9,6 +9,19 @@ router.get('/', function(req, res, next) {
     res.send('respond with a resource');
 });
 
+router.post('/:id', function(req, res, next) {
+    var id = req.param('id');
+    var name = req.param('name');
+    var address = req.param('address');
+    var notes = req.param('notes'); 
+    User.find(id).then(function(user) {
+        user.name = name;
+        user.address = address;
+        user.notes = notes;
+        user.save()
+    });
+});
+
 router.get('/:id/messages', function(req, res, next) {
     var id = req.param('id');
     User.find({

@@ -11,6 +11,18 @@ var User = database.define('users', {
         type: Sequelize.STRING,
         field: 'phone_number'
     },
+    name: {
+        type: Sequelize.STRING,
+        field: 'name'
+    },
+    address: {
+        type: Sequelize.STRING,
+        field: 'address'
+    },
+    notes: {
+        type: Sequelize.TEXT,
+        field: 'notes'
+    },
     status: {
         type: Sequelize.STRING
     }
