@@ -1,11 +1,22 @@
 var express = require('express');
 var router = express.Router();
 var User = require('../models/users')
+var Message = require('../models/messages');
 var stripe = require('stripe')(process.env.STRIPE_MAGIC_API_KEY);
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
     res.send('respond with a resource');
+});
+
+router.get('/:id/messages', function(req, res, next) {
+    var id = req.param('id');
+    User.find({
+        where: {id: id},
+        include: [ Message ]
+    }).then(function(user) {
+        res.json(user);
+    });
 });
 
 router.get('/:id/cc/', function(req, res, next) {
