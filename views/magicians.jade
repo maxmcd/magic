@@ -1,23 +1,26 @@
-extends layout
+extends admin_layout
 
-block content
-    .container
+block admin_content
+    .row
+        .offset-by-three.six.columns
+            h4 Add Magician
+            form(action="/magicians/add/" method="post")
+                label(for="email") Email 
+                input.u-full-width(type="email" name="email" id="email" autofocus="true" autocomplete="false")
+                label(for="password") Password
+                input.u-full-width(type="password" name="password" id="password" autocomplete="false")
+                input(type="submit" value="Create")
+    if magicians
         .row
-            .offset-by-three.six.columns
-                h4 Add Magician
-                form(action="/magicians/add/" method="post")
-                    label(for="email") Email 
-                    input.u-full-width(type="email" name="email" id="email" autofocus="true")
-                    label(for="password") Password
-                    input.u-full-width(type="password" name="password" id="password")
-                    input(type="submit" value="Create")
-        if magicians
-            .row
-                table.u-full-width
-                    thead
+            table.u-full-width
+                thead
+                    tr
+                        th Id
+                        th Email
+                        th Is Admin?
+                tbody 
+                    each magician in magicians
                         tr
-                            th Email
-                    tbody 
-                        each magician in magicians
-                            tr
-                                td= magician.email
+                            td= magician.email
+                            td= magician.id
+                            td= magician.isAdmin

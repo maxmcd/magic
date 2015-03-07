@@ -10,10 +10,10 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/:id', function(req, res, next) {
-    var id = req.param('id');
-    var name = req.param('name');
-    var address = req.param('address');
-    var notes = req.param('notes'); 
+    var id = req.params('id');
+    var name = req.params('name');
+    var address = req.params('address');
+    var notes = req.params('notes'); 
     User.find(id).then(function(user) {
         user.name = name;
         user.address = address;
@@ -22,8 +22,8 @@ router.post('/:id', function(req, res, next) {
     });
 });
 
-router.get('/:id/messages', function(req, res, next) {
-    var id = req.param('id');
+router.get('/:id', function(req, res, next) {
+    var id = req.params('id');
     User.find({
         where: {id: id},
         include: [ Message ]
@@ -32,14 +32,20 @@ router.get('/:id/messages', function(req, res, next) {
     });
 });
 
+router.post('/assign-new', function(req, res, next) {
+    User.find({
+        where: {magicianId: null}
+    })
+})
+
 router.get('/:id/cc/', function(req, res, next) {
-    var id = req.param('id');
+    var id = req.params('id');
     res.render('cc', {userId: id})
 })
 
 router.post('/:id/cc/', function(req, res, next) {
     console.log(req)
-    var id = req.param('id');
+    var id = req.params('id');
     var token = req.body["token[id]"]
     User.find(id).then(function(user) {
         user.stripeId = token

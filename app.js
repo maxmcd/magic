@@ -7,14 +7,16 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var lessMiddleware = require('less-middleware');
 
-require('./models/migrate')
+require('./models/migrate');
 
-var User = require('./models/users')
+var User = require('./models/users');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var admin = require('./routes/admin');
 var login = require('./routes/login');
-var twilio = require('./routes/twilio')
+var twilio = require('./routes/twilio');
+
 var magicians = require('./routes/magicians');
 var dashboard = require('./routes/dashboard');
 
@@ -46,41 +48,48 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 var Magician = require('./models/magicians');
-app.use(/\/(magicians|dashboard).*/, function(req, res, next) {
-    if (req.session.magician_id != undefined) {
-        var id = req.session.magician_id
+app.use(/\/(admin|dashboard).*/, function(req, res, next) {
+    req.session.previous_url = req.baseUrl;
+    if (req.session.magician_id !== undefined) {
+        var id = req.session.magician_id;
         Magician.find({
             where: {
                 id: id
             }
         }).then(function(magician) {
-            if (magician == null) {
+            if (magician === null) {
                 res.redirect('/login');
             } else {
-                res.locals.magician = magician
+                res.locals.magician = magician;
                 next();
-                // res.render('dashboard', { 
-                //     magician: magician,
-                //     title: 'dashboard' 
-                // });
             }
         });
     } else {
         res.redirect('/login');
     }
-})
+});
+
+app.use(/\/admin.*/, function(req, res, next) {
+    if (res.locals.magician.isAdmin === true) {
+        next();
+    } else {
+        res.status(500).send('Invalid, user is not admin!');
+    }
+});
 
 
 app.use('/', routes);
+app.use('/admin', admin);
 app.use('/users', users);
 app.use('/login', login);
 app.use('/twilio', twilio);
-app.use('/magicians', magicians);
+app.use('/admin/magicians', magicians);
 app.use('/dashboard', dashboard);
 
+
 app.obtainSocketIo = function(io) {
-    twilio.obtainSocketIo(io)
-}
+    twilio.obtainSocketIo(io);
+};
 
 
 // catch 404 and forward to error handler

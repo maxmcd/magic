@@ -14,6 +14,10 @@ block content
                 span.email=magician.email
                 | &nbsp;-&nbsp;
                 a(href="/login/quit") Sign out
+                if magician.isAdmin
+                    | &nbsp;-&nbsp;
+                    a.admin(href="/admin") Admin
+                
 
         .messages
             .header 

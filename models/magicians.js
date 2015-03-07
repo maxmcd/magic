@@ -1,6 +1,5 @@
-var Sequelize = require('sequelize')
-var database = require('./database')
-var bcrypt = require('bcrypt')
+var Sequelize = require('sequelize');
+var database = require('./database');
 
 var Magician = database.define('magicians', {
     email: {
@@ -10,6 +9,11 @@ var Magician = database.define('magicians', {
     password: {
         type: Sequelize.STRING,
         field: 'password'
+    },
+    isAdmin: {
+        type: Sequelize.BOOLEAN,
+        file: 'is_admin',
+        defaultValue: false
     }
 }, {
     freezeTableName: true 

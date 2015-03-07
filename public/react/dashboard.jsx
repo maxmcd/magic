@@ -5,7 +5,7 @@ if (document.getElementsByClassName('dashboard').length > 0) {
         render: function() {
             return (
                 <div className="header">
-                    <h3 classNma="title">
+                    <h3 className="title">
                         {this.props.data}
                     </h3>
                 </div>
@@ -147,14 +147,20 @@ if (document.getElementsByClassName('dashboard').length > 0) {
             console.log("success");
         },
         render: function() {
+            var name, address, notes;
+            if (this.props.user !== null) {
+                name = this.props.user.name;
+                address = this.props.user.address;
+                notes = this.props.user.notes;
+            }
             return (
                 <form onSubmit={this.handleSubmit}>
-                    <label for="name">Name</label>
-                    <input type="text" name="name" ref="name" className="u-full-width" />
-                    <label for="address">Address</label>
-                    <textarea type="text" name="address" ref="address" className="u-full-width"></textarea>
-                    <label for="notes">Notes</label>
-                    <textarea type="text" name="notes" ref="notes" className="u-full-width"></textarea>
+                    <label htmlFor="name">Name</label>
+                    <input value={name} type="text" name="name" ref="name" className="u-full-width" />
+                    <label htmlFor="address">Address</label>
+                    <textarea value={address} type="text" name="address" ref="address" className="u-full-width"></textarea>
+                    <label htmlFor="notes">Notes</label>
+                    <textarea value={notes} type="text" name="notes" ref="notes" className="u-full-width"></textarea>
                     <input type="submit" value="update" />
                 </form>
             );
@@ -166,10 +172,10 @@ if (document.getElementsByClassName('dashboard').length > 0) {
         render: function() {
             return (
                 <div className="info">
-                    <UserForm />
+                    <UserForm user={this.props.user} />
                     <hr />
                     <form>
-                        <label for="amount">Charge</label>
+                        <label htmlFor="amount">Charge</label>
                         <input type="number" id="amount" className="u-full-width" />
                         <input type="submit" value="charge" />
                     </form>
@@ -198,6 +204,17 @@ if (document.getElementsByClassName('dashboard').length > 0) {
             };
         },
         render: function() {
+            console.log(this.state);
+
+            var footer;
+            if (magician.isAdmin) {
+                footer = (
+                    <span>
+                        &nbsp;-&nbsp;
+                        <a href="/admin">Admin</a>
+                    </span>
+                );
+            }
             return (
                 <div className="dashboard">
                     <div className="sidebar">
@@ -216,10 +233,11 @@ if (document.getElementsByClassName('dashboard').length > 0) {
                             </span>
                             &nbsp;-&nbsp;
                             <a href="/login/quit">Sign out</a>
+                            {footer}
                         </div>
                     </div>
                     <Messages data={this.state.messageData}/>
-                    <Info />
+                    <Info user={this.state.messageData.user}/>
                 </div>
             );
         }
