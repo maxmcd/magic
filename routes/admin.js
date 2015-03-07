@@ -6,25 +6,20 @@ var Message = require('../models/messages');
 var User = require('../models/users');
 
 router.get('/', function(req, res, next) {
-    var msg_count, mag_count, usr_count;
+    var response = {};
 
-    Magician.count().on('success', function(e) {
-        msg_count = e;
+    Magician.count().then(function(count) {
+        response.magician_count = count;
 
-        User.count().on('success', function(e) {
-            usr_count = e;
+        return User.count();
+    }).then(function(count) {
+        response.user_count = count;
 
-            Magician.count().on('success', function(e) {
-                mag_count = e;
-
-                res.render('admin', {
-                    magician_count: mag_count,
-                    message_count: msg_count,
-                    user_count: usr_count
-                }); 
-
-            });
-        });
+        return Message.count();
+    }).then(function(count) {
+        response.message_count = count;
+        
+        res.render('admin', response); 
     });
 
 });
