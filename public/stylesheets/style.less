@@ -186,13 +186,17 @@ body {
         display: inline-block;
         margin-right: 10px;
     }
-    .explorer ul {
-        margin: 0px;
+    .explorer {
+        min-height: 300px;
+        padding-bottom: 50px;
+        ul {
+            margin: 0px;
+        }
     }
     .explorer-table {
         overflow-x: auto;
         &.loading {
-            background-color: #eee;   
+            // background-color: #eee;   
             min-height: 300px;
             position: relative;
             &:after {

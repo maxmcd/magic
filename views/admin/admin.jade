@@ -3,17 +3,19 @@ extends admin_layout
 block admin_content
     script.
         var tables = !{JSON.stringify(keys)}
-    table.u-full-width
-        thead
-            tr
-                th Magicians
-                th Users
-                th Messages
-        tbody
-            tr
-                td= magician_count
-                td= user_count
-                td= message_count
+    .row
+        h4 Counts
+        table.u-full-width
+            thead
+                tr
+                    th Magicians
+                    th Users
+                    th Messages
+            tbody
+                tr
+                    td= magician_count
+                    td= user_count
+                    td= message_count
     .row
         h4 Database Explorer
         .explorer

@@ -18,7 +18,11 @@ if ($('.container.admin').length > 0) {
             var createRow = function(row) {
                 var values = [];
                 for (var item in row) {
-                    values.push(row[item]);
+                    if (typeof row[item] == "boolean") {
+                        values.push(JSON.stringify(row[item]));
+                    } else {
+                        values.push(row[item]);
+                    }
                 }
                 return (
                     <tr>
@@ -90,6 +94,7 @@ if ($('.container.admin').length > 0) {
         updateTable: function(tableName) {
             this.state.loading = true;
             this.state.tableData.data.rows = [];
+            this.state.tableData.data.count = null;
             this.state.tableData.currentTable = tableName;
             this.setState(this.state);
             var that = this;
@@ -136,6 +141,7 @@ if ($('.container.admin').length > 0) {
                         current={this.state.tableData.currentTable}
                         />
                     <div className={tableClass}>
+                        <b>Count:</b> {this.state.tableData.data.count}
                         <Table 
                             tableData={this.state.tableData} 
                         />

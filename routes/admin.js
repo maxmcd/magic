@@ -44,7 +44,7 @@ router.get('/:table/all', function(req, res, next) {
         limit: 10
     }).then(function(result) {
         res.json(result);
-    });
+    });   
 });
 
 router.get('/:table/:id', function(req, res, next) {
