@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
     var magicians;
     Magician.findAll().then(function(result) {
         magicians = result;
-        res.render('magicians', { title: 'Express', magicians: magicians });
+        res.render('admin/magicians', { title: 'Express', magicians: magicians });
     });
 });
 
@@ -29,7 +29,7 @@ router.post('/add', function(req, res, next) {
                 email: email,
                 password: hash
             });
-            magician.save()
+            magician.save();
             res.redirect('/magicians');
         });
     });

@@ -4,7 +4,7 @@ var router = express.Router();
 var Magician = require('../models/magicians');
 
 router.get('/', function(req, res, next) {
-    var magician = res.locals.magician
+    var magician = res.locals.magician;
 
     magician.getUsers().then(function(users) {
         res.render('dashboard', {
@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
             users: users,
             displayTitle: process.env.MAGIC_NAME
         });
-    })
+    });
 });
 
 

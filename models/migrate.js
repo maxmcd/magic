@@ -7,6 +7,7 @@ var bcrypt = require('bcrypt');
 
 Magician.hasMany(User);
 Magician.hasMany(Message);
+Magician.hasMany(Charge);
 User.hasMany(Message);
 User.hasMany(Charge);
 

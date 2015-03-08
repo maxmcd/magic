@@ -7,8 +7,8 @@ var Charge = database.define('charges', {
         field: 'note'
     },
     transactionId: {
-        type: Sequelize.INTEGER,
-        field: 'transaction_id'
+        type: Sequelize.STRING,
+        field: 'charge_id'
     }
 }, {
     freezeTableName: true 

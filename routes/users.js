@@ -1,7 +1,10 @@
 var express = require('express');
 var router = express.Router();
-var User = require('../models/users')
+
+var User = require('../models/users');
 var Message = require('../models/messages');
+var Charge = require('../models/charges');
+
 var stripe = require('stripe')(process.env.STRIPE_MAGIC_API_KEY);
 
 /* GET users listing. */
@@ -18,7 +21,7 @@ router.post('/:id', function(req, res, next) {
         user.name = name;
         user.address = address;
         user.notes = notes;
-        user.save()
+        user.save();
     });
 });
 
@@ -35,34 +38,36 @@ router.get('/:id', function(req, res, next) {
 router.post('/assign-new', function(req, res, next) {
     User.find({
         where: {magicianId: null}
-    })
-})
+    });
+});
 
 router.get('/:id/cc/', function(req, res, next) {
     var id = req.params('id');
-    res.render('cc', {userId: id})
-})
+    res.render('cc', {userId: id});
+});
 
 router.post('/:id/cc/', function(req, res, next) {
-    console.log(req)
+    console.log(req);
     var id = req.params('id');
-    var token = req.body["token[id]"]
+    var token = req.body["token[id]"];
     User.find(id).then(function(user) {
-        user.stripeId = token
+        user.stripeId = token;
         user.save().then(function(user) {
-            res.json(true)           
-        })
-    })
+            res.json(true);           
+        });
+    });
     // should alert a socket here that 
     // the card is ready
     // maybe just send a message?
-})
+});
+
 
 router.post("/:id/charge/", function(req, res, next) {
-    var amount = req.body.amount
+    var amount = req.body.amount;
+    // var id = req.params('id');
     
-    var formattedAmount = Math.round(amount*100)
-    // stripe needs 1040, not 10.40
+    var formattedAmount = Math.round(amount*100);
+    // stripe needs an integer, ie: 1040, not 10.40
 
     User.find(id).then(function(user) {
         stripe.charges.create({
@@ -71,13 +76,21 @@ router.post("/:id/charge/", function(req, res, next) {
           source: user.stripeId, // obtained with Stripe.js
           description: "Charge for Magic"
         }, function(err, charge) {
-            if (!err) {
-                res.json(true)
-                return
-            }
+            console.log(charge);
+            Charge.create({
+                userId: id,
+                magicianId: req.session.magician_id,
+                amount: charge.amount,
+                charge_id: charge.id
+            }).then(function(charge) {
+                if (!err) {
+                    res.json(true);
+                    return;
+                }
+            });
         });
-    })
+    });
     res.status(500).send('Something broke!');
-})
+});
 
 module.exports = router;
