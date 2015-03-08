@@ -88,11 +88,17 @@ if ($('.container.admin').length > 0) {
     });
     var Explorer = React.createClass({
         updateTable: function(tableName) {
+            this.state.loading = true;
+            this.state.tableData.data.rows = [];
             this.state.tableData.currentTable = tableName;
+            this.setState(this.state);
             var that = this;
             $.get("admin/"+ tableName+"/all", function(response) {
-                that.state.tableData.data = response;
-                that.setState(that.state);
+                if (tableName == that.state.tableData.currentTable) {
+                    that.state.tableData.data = response;
+                    that.state.loading = false;
+                    that.setState(that.state);                    
+                }
             });
         },
         componentDidMount: function () {
@@ -107,6 +113,7 @@ if ($('.container.admin').length > 0) {
                 // global variable instantiated in
                 // layout
                 tables: tables,
+                loading: true,
                 tableData: {
                     currentTable: tables[0],
                     data: {
@@ -117,6 +124,10 @@ if ($('.container.admin').length > 0) {
             };
         },
         render: function() {
+            var tableClass = "explorer-table";
+            if (this.state.loading === true) {
+                tableClass += " loading";
+            } 
             return (
                 <div className="explorer">
                     <Menu 
@@ -124,8 +135,10 @@ if ($('.container.admin').length > 0) {
                         tables={this.state.tables} 
                         current={this.state.tableData.currentTable}
                         />
-                    <div className="explorer-table">
-                        <Table tableData={this.state.tableData} />
+                    <div className={tableClass}>
+                        <Table 
+                            tableData={this.state.tableData} 
+                        />
                     </div>
                 </div>
             );

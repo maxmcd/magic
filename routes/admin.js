@@ -52,7 +52,7 @@ router.get('/:table/:id', function(req, res, next) {
         find(req.params.id).
         then(function(thing) {
             res.json(thing);
-    });
+    });        
 });
 
 

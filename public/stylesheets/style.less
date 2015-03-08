@@ -191,6 +191,18 @@ body {
     }
     .explorer-table {
         overflow-x: auto;
+        &.loading {
+            background-color: #eee;   
+            min-height: 300px;
+            position: relative;
+            &:after {
+                content: "loading";
+                position: absolute;
+                text-align: center;
+                width: 100%;
+                color: #999;
+            }
+        }
     }
 }
 
