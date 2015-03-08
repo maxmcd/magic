@@ -47,6 +47,24 @@ router.get('/:table/all', function(req, res, next) {
     });   
 });
 
+router.post('/:table/:id', function(req, res, next) {
+    models[req.params.table].find(req.params.id)
+    .then(function(thing) {
+        console.log(req.body);
+        for (var attr in req.body) {
+            var value = req.body[attr];
+            if (value === "") {
+                value = null;
+            }
+            thing[attr] = value; 
+        }
+        console.log(thing);
+        thing.save().then(function(thing) {
+            res.json(thing);
+        });
+    });
+});
+
 router.get('/:table/:id', function(req, res, next) {
     models[req.params.table].
         find(req.params.id).

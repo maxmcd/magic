@@ -51,7 +51,8 @@ var seed = function() {
                 });
                 Message.create({
                     userId: 1,
-                    body: "this is a fake message"
+                    body: "this is a fake message",
+                    fromUser: true
                 });
             });
         });

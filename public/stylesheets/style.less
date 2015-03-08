@@ -192,6 +192,14 @@ body {
         ul {
             margin: 0px;
         }
+        .editor {
+            border: 1px solid #999;
+            border-radius: 5px;
+            padding: 10px;
+            &.hidden {
+                display: none;
+            }
+        }
     }
     .explorer-table {
         overflow-x: auto;
@@ -206,6 +214,9 @@ body {
                 width: 100%;
                 color: #999;
             }
+        }
+        td {
+            cursor: pointer;
         }
     }
 }
