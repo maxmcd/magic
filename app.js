@@ -7,7 +7,10 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var lessMiddleware = require('less-middleware');
 
-require('./models/migrate');
+var SequelizeStore = require(
+    'connect-session-sequelize')(expressSession.Store);
+
+var sequelize = require('./models/migrate');
 
 var User = require('./models/users');
 
@@ -21,8 +24,6 @@ var magicians = require('./routes/magicians');
 var dashboard = require('./routes/dashboard');
 
 var app = express();
-
-
 // less middleware setup
 
 app.use(lessMiddleware(__dirname + '/public'));
@@ -40,10 +41,16 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: false
 }));
+
 app.use(cookieParser());
 app.use(expressSession({
-    secret: '1234567890QWERTY'
+    secret: '1234567890QWERTY',
+    store: new SequelizeStore({
+        db: sequelize
+    }),
+    proxy: true 
 }));
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 

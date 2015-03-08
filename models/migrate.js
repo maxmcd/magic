@@ -11,9 +11,9 @@ Magician.hasMany(Charge);
 User.hasMany(Message);
 User.hasMany(Charge);
 
-sequelize.sync({force: true}).success(function() {
+sequelize.sync({force: false}).success(function() {
     console.log('sync done');
-    seed();
+    // seed();
 }).error(function(error) {
     console.log('there was a problem');
 });

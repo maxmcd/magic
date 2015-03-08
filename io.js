@@ -4,9 +4,28 @@ var twilio = require('twilio')(
     process.env.TWILIO_MAGIC_TOKEN
 );
 
+var sequelize = require('./models/migrate');
+var cookieParser = require('cookie-parser');
+var expressSession = require('express-session');
+var SequelizeStore = require(
+    'connect-session-sequelize')(expressSession.Store);
+var sessionMiddleware = expressSession({
+    secret: '1234567890QWERTY',
+    store: new SequelizeStore({
+        db: sequelize
+    })
+});
+
 module.exports = function(io) {
-    console.log('any');
+
+    io.use(function(socket, next) {
+        sessionMiddleware(socket.request, socket.request.res, next);
+    });
+
     io.on('connection', function(socket) {
+        if (socket.request.session.magician_id === null) {
+            socket.disconnect();
+        }
         socket.on('user', function(user) {
             socket.join("u_" + user.id);
         });
