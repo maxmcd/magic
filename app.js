@@ -56,28 +56,32 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 var Magician = require('./models/magicians');
 app.use(/\/(admin|dashboard).*/, function(req, res, next) {
-    req.session.previous_url = req.baseUrl;
-    req.session.save(function() {
-        console.log(req.session);
-        if (req.session.magician_id !== undefined) {
-            var id = req.session.magician_id;
-            Magician.find({
-                where: {
-                    id: id
-                }
-            }).then(function(magician) {
-                if (magician === null) {
-                    console.log(magician);
-                    res.redirect('/login');
-                } else {
-                    res.locals.magician = magician;
-                    next();
-                }
-            });
-        } else {
-            res.redirect('/login');
-        }        
+    Magician.find(1).then(function(magician) {
+        res.locals.magician = magician;
+        next();
     });
+    // req.session.previous_url = req.baseUrl;
+    // req.session.save(function() {
+    //     console.log(req.session);
+    //     if (req.session.magician_id !== undefined) {
+    //         var id = req.session.magician_id;
+    //         Magician.find({
+    //             where: {
+    //                 id: id
+    //             }
+    //         }).then(function(magician) {
+    //             if (magician === null) {
+    //                 console.log(magician);
+    //                 res.redirect('/login');
+    //             } else {
+    //                 res.locals.magician = magician;
+    //                 next();
+    //             }
+    //         });
+    //     } else {
+    //         res.redirect('/login');
+    //     }        
+    // });
 });
 
 app.use(/\/admin.*/, function(req, res, next) {
