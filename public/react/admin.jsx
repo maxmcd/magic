@@ -7,7 +7,7 @@ if ($('.container.admin').length > 0) {
         render: function() {
             var createData = function(value, index) {
                 return (
-                    <td key={index}>{value}</td>
+                    <td key={index}>{value}</ td>
                 );
             };
             var row = this.props.row;
@@ -205,7 +205,6 @@ if ($('.container.admin').length > 0) {
             });
         },
         openItemEditor: function(rowData) {
-            console.log(rowData)
             this.state.editorOpen = true;
             this.state.rowData = rowData;
             this.setState(this.state);
