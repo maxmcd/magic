@@ -1,7 +1,7 @@
-var Sequelize = require('sequelize')
-var sequelize
-if (process.env.NODE_ENV == 'production') {
-
+var Sequelize = require('sequelize');
+var sequelize;
+if (process.env.NODE_ENV == 'PRODUCTION') {
+    sequelize = new Sequelize(process.env.DATABASE_URL);
 } else {
     sequelize = new Sequelize(
         'magictest', 
@@ -10,8 +10,8 @@ if (process.env.NODE_ENV == 'production') {
         {
             dialect: 'postgres'
         }
-    )
+    );
 }
 
-module.exports = sequelize
+module.exports = sequelize;
 

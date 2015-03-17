@@ -13,15 +13,18 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/:id', function(req, res, next) {
-    var id = req.params('id');
-    var name = req.params('name');
-    var address = req.params('address');
-    var notes = req.params('notes'); 
+    var id = req.params.id;
+    var name = req.body.name;
+    var address = req.body.address;
+    var notes = req.body.notes; 
     User.find(id).then(function(user) {
         user.name = name;
         user.address = address;
         user.notes = notes;
-        user.save();
+        console.log(user)
+        user.save().then(function() {
+            res.json(true);
+        });
     });
 });
 

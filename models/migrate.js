@@ -11,9 +11,23 @@ Magician.hasMany(Charge);
 User.hasMany(Message);
 User.hasMany(Charge);
 
-sequelize.sync({force: false}).success(function() {
+var force_migrate, seed;
+if (process.env.MIGRATE === "true") {
+    force_migrate = true;
+} else {
+    force_migrate = false;
+}
+if (process.env.SEED === "true") {
+    run_seed = true;
+} else {
+    run_seed = false;
+}
+ 
+sequelize.sync({force: force_migrate}).success(function() {
     console.log('sync done');
-    // seed();
+    if (run_seed === true) {
+        seed();        
+    }
 }).error(function(error) {
     console.log('there was a problem');
 });
