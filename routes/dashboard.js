@@ -2,11 +2,12 @@ var express = require('express');
 var router = express.Router();
 
 var Magician = require('../models/magicians');
+var Message = require('../models/messages');
 
 router.get('/', function(req, res, next) {
     var magician = res.locals.magician;
 
-    magician.getUsers().then(function(users) {
+    magician.getUsers({include: [ Message ]}).then(function(users) {
         res.render('dashboard', {
             magician: res.locals.magician,
             title: 'dashboard',
