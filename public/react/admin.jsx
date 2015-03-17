@@ -272,4 +272,4 @@ $(function() {
         });
         React.render(<Explorer />, $('.explorer')[0]);
     }    
-})
+});

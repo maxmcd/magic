@@ -1,6 +1,6 @@
-var Sequelize = require('sequelize')
-var database = require('./database')
-var Magician = require('./magicians')
+var Sequelize = require('sequelize');
+var database = require('./database');
+var Magician = require('./magicians');
 
 var User = database.define('users', {
     stripeId: {

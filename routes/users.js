@@ -17,11 +17,14 @@ router.post('/:id', function(req, res, next) {
     var name = req.body.name;
     var address = req.body.address;
     var notes = req.body.notes; 
+    var status = req.body.status;
     User.find(id).then(function(user) {
         user.name = name;
         user.address = address;
         user.notes = notes;
-        console.log(user)
+        if (status !== null && status !== undefined) {
+            user.status = status;
+        }
         user.save().then(function() {
             res.json(true);
         });

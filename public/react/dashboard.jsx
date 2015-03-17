@@ -135,7 +135,8 @@ $(function() {
                 return {
                     name: this.props.user.name,
                     address: this.props.user.address,
-                    notes: this.props.user.notes
+                    notes: this.props.user.notes,
+                    status: this.props.user.status
                 };
             },
             onChange: function(field, evt) {
@@ -146,27 +147,38 @@ $(function() {
                 this.setState({
                     name: nextProps.user.name || "",
                     address: nextProps.user.address || "",
-                    notes: nextProps.user.notes || ""
+                    notes: nextProps.user.notes || "",
+                    status: nextProps.user.status || ""
                 });
             },
             render: function() {
                 return (
                     <form onSubmit={this.handleSubmit}>
-                        <label htmlFor="name">Name</label>
+                        <label>Name</label>
                         <input value={this.state.name} type="text" name="name"
                             onChange={this.onChange.bind(null, "name")}
                          className="u-full-width" />
 
-                        <label htmlFor="address">Address</label>
+                        <label>Address</label>
                         <textarea value={this.state.address} type="text" name="address"
                             onChange={this.onChange.bind(null, "address")}
                          className="u-full-width"></textarea>
 
-                        <label htmlFor="notes">Notes</label>
+                        <label>Notes</label>
                         <textarea value={this.state.notes} type="text" name="notes"
                             onChange={this.onChange.bind(null, "notes")}
                          className="u-full-width"></textarea>
+
+                         <label>Status</label>
+                         <select value={this.state.status} className="u-full-width" onChange={this.onChange.bind(null, "status")}>
+                            <option value="new">New</option>
+                            <option value="active">Active</option>
+                            <option value="complete">Complete</option>
+                         </select>
+
                         <input type="submit" value="update" />
+
+
                     </form>
                 );
             }
@@ -215,7 +227,10 @@ $(function() {
                 this.state.user.name = formState.name;
                 this.state.user.address = formState.address;
                 this.state.user.notes = formState.notes;
+                this.state.user.status = formState.status;
+
                 this.setState(this.state);
+                
                 $.post("/users/" + user.id, formState);
                 console.log("success");
             },
@@ -240,7 +255,7 @@ $(function() {
                 sendMessage(message);
             },
             render: function() {
-                console.log(this.state)
+                console.log(this.state);
                 var footer;
                 if (magician.isAdmin) {
                     footer = (
