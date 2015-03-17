@@ -6,6 +6,7 @@ var expressSession = require('express-session');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var lessMiddleware = require('less-middleware');
+var jsxtransform = require('express-jsxtransform');
 
 var SequelizeStore = require(
     'connect-session-sequelize')(expressSession.Store);
@@ -27,12 +28,14 @@ var app = express();
 // less middleware setup
 
 app.use(lessMiddleware(__dirname + '/public'));
+app.use(jsxtransform());
 app.use(express.static(__dirname + '/public'));
 
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
