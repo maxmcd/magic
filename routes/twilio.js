@@ -1,18 +1,18 @@
 var express = require('express');
 var router = express.Router();
 
-var User = require('../models/users.js')
-var Message = require('../models/messages.js')
+var User = require('../models/users.js');
+var Message = require('../models/messages.js');
 
-var io
+var io;
 
 // io.in("u_"+userId).emit('message', messagedata);
 
 
 /* GET home page. */
 router.post('/', function(req, res, next) {
-    var fromNumber = req.body.From
-    var messageBody = req.body.Body
+    var fromNumber = req.body.From;
+    var messageBody = req.body.Body;
 
     User.findOrCreate({
             where: {phoneNumber: fromNumber}, 
@@ -24,15 +24,15 @@ router.post('/', function(req, res, next) {
             body: messageBody,
             fromUser: true
         }).then(function(message) {
-            io.in("u_"+user.id).emit('message', message)
+            io.in("u_"+user.id).emit('message', message);
             res.set('Content-Type', 'text/xml');
             res.send("true");
-        })
-    })
+        });
+    });
 });
 
 router.obtainSocketIo = function(passedIo) {
-    io = passedIo
-}
+    io = passedIo;
+};
 
 module.exports = router;

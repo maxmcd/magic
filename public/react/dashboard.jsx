@@ -54,12 +54,21 @@ $(function() {
                 this.setState({message: ''});
             },
             render: function() {
+                var status = this.props.connectionStatus;
+
+                if (this.props.sendingStatus !== null) {
+                    status += " - " + this.props.sendingStatus;                    
+                }
+
                 return (
                     <div className="messages">
                         <Header data={this.props.user.phoneNumber}/>
                         <MessageBody items={this.props.user.messages} />
                         <div className="input">
                             <form onSubmit={this.handleSubmit}>
+                                <div className="status">
+                                    {status}
+                                </div>
                                 <input 
                                     type="text" 
                                     ref="input" 
@@ -219,8 +228,17 @@ $(function() {
                                 [message]
                             );
                             that.setState(that.state);                    
+                        }
+                        if (message.userId == window.user.id && message.fromUser !== true) {
+                            that.state.sendingStatus = null;
+                            that.setState(that.state);
                         }                        
                     }
+                });
+
+                socket.on("connect", function(e) {
+                    that.state.connectionStatus = "Connected";
+                    that.setState(that.state);
                 });
             },
             userFormSubmit: function(formState) {
@@ -241,17 +259,14 @@ $(function() {
                     title: title, 
                     email: email,
                     users: window.users,
-                    user: window.user
+                    user: window.user,
+                    connectionStatus: "Connecting...",
+                    sendingStatus: null
                 };
             },
             messageSubmit: function(message) {
-                // this.state.user.messages = this.state.user.messages.concat(
-                //     [{
-                //         body: message,
-                //         tmp: true,
-                //     }]
-                // );
-                // this.setState(this.state);
+                this.state.sendingStatus = "Sending message";
+                this.setState(this.state);
                 sendMessage(message);
             },
             render: function() {
@@ -289,6 +304,8 @@ $(function() {
                         <Messages 
                             user={this.state.user}
                             messageSubmit={this.messageSubmit}
+                            sendingStatus={this.state.sendingStatus}
+                            connectionStatus={this.state.connectionStatus}
                         />
                         <Info 
                             user={this.state.user}

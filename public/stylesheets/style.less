@@ -133,7 +133,7 @@ body {
             }
         }
         .body {
-            height: calc(~"100% - 120px");
+            height: calc(~"100% - 130px");
             overflow-y: auto;
             .message-wrapper {
                 padding: 10px 10px 0 10px;
@@ -152,9 +152,16 @@ body {
             }
         }
         .input {
-            height: 70px;
+            height: 80px;
+            position: relative;
+            .status {
+                position: absolute;
+                top: 0px;
+                font-size: 14px;
+                left: 15px;
+            }
             input {
-                margin: 10px;
+                margin: 25px 10px 5px 10px;
                 height: 40px;
                 border: 1px solid #999;
                 width: calc(~"100% - 20px");
