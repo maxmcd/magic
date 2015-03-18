@@ -14,7 +14,6 @@ router.get('/', function(req, res, next) {
 
 router.get('/quit', function(req, res, next) {
     req.session.destroy(function() {    
-        console.log("SDSD");
         res.redirect('/');        
     });
 });

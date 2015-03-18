@@ -82,7 +82,6 @@ router.post("/:id/charge/", function(req, res, next) {
           source: user.stripeId, // obtained with Stripe.js
           description: "Charge for Magic"
         }, function(err, charge) {
-            console.log(charge);
             Charge.create({
                 userId: id,
                 magicianId: req.session.magician_id,

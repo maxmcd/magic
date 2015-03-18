@@ -102,7 +102,6 @@ $(function() {
             handleSubmit: function(e) {
                 var updateFunction = this.props.updateFunction;
                 e.preventDefault();
-                console.log(e);
                 var form = $(e.target);
                 $.ajax({
                     type: "POST",

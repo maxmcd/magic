@@ -14,6 +14,23 @@ $(function() {
             }
         });
         var MessageBody = React.createClass({
+            scrollDownBody: function(e) {
+                console.log(e)
+                var body = this.refs.body.getDOMNode()
+                body.scrollTop = body.scrollHeight;
+            },
+            componentDidMount: function(e) {
+                this.scrollDownBody()
+            },
+            componentWillReceiveProps: function(nextProps) {
+                console.log(this.props, nextProps)
+                if (this.props.user.id !== nextProps.user.id) {
+                    var that = this;
+                    window.setTimeout(function() {
+                        that.scrollDownBody()                        
+                    }, 0)
+                }
+            },
             render: function() {
                 var createItem = function(messageObject) {
                     var className;
@@ -31,7 +48,7 @@ $(function() {
                     );
                 };
                 return (
-                    <div className="body">
+                    <div className="body" ref="body">
                         {this.props.items.map(createItem)}
                     </div>
                 );
@@ -63,7 +80,10 @@ $(function() {
                 return (
                     <div className="messages">
                         <Header data={this.props.user.phoneNumber}/>
-                        <MessageBody items={this.props.user.messages} />
+                        <MessageBody 
+                            items={this.props.user.messages} 
+                            user={this.props.user}
+                        />
                         <div className="input">
                             <form onSubmit={this.handleSubmit}>
                                 <div className="status">
@@ -248,7 +268,7 @@ $(function() {
                 this.state.user.status = formState.status;
 
                 this.setState(this.state);
-                
+
                 $.post("/users/" + user.id, formState);
                 console.log("success");
             },
