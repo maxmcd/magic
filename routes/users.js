@@ -47,16 +47,15 @@ router.post('/assign-new', function(req, res, next) {
     });
 });
 
-router.get('/:id/cc/', function(req, res, next) {
-    var id = req.params('id');
-    res.render('cc', {userId: id});
+router.get('/:number/cc/', function(req, res, next) {
+    var phoneNumber = req.params.number;
+    res.render('cc', {phoneNumber: phoneNumber});
 });
 
-router.post('/:id/cc/', function(req, res, next) {
-    console.log(req);
-    var id = req.params('id');
+router.post('/:number/cc/', function(req, res, next) {
+    var phoneNumber = req.params.number;
     var token = req.body["token[id]"];
-    User.find(id).then(function(user) {
+    User.find({where: {phoneNumber: phoneNumber}}).then(function(user) {
         user.stripeId = token;
         user.save().then(function(user) {
             res.json(true);           
@@ -68,7 +67,7 @@ router.post('/:id/cc/', function(req, res, next) {
 });
 
 
-router.post("/:id/charge/", function(req, res, next) {
+router.post("/:number/charge/", function(req, res, next) {
     var amount = req.body.amount;
     // var id = req.params('id');
     

@@ -1,7 +1,6 @@
 $(function() {
-    window.user = users[0];
-
     if (document.getElementsByClassName('dashboard').length > 0) {
+        window.user = users[0];
         var Header = React.createClass({
             render: function() {
                 return (
@@ -15,20 +14,18 @@ $(function() {
         });
         var MessageBody = React.createClass({
             scrollDownBody: function(e) {
-                console.log(e)
-                var body = this.refs.body.getDOMNode()
+                var body = this.refs.body.getDOMNode();
                 body.scrollTop = body.scrollHeight;
             },
             componentDidMount: function(e) {
-                this.scrollDownBody()
+                this.scrollDownBody();
             },
             componentWillReceiveProps: function(nextProps) {
-                console.log(this.props, nextProps)
                 if (this.props.user.id !== nextProps.user.id) {
                     var that = this;
                     window.setTimeout(function() {
-                        that.scrollDownBody()                        
-                    }, 0)
+                        that.scrollDownBody();
+                    }, 0);
                 }
             },
             render: function() {
@@ -69,6 +66,18 @@ $(function() {
                 e.preventDefault();
                 this.props.messageSubmit(this.state.message);
                 this.setState({message: ''});
+            },
+            componentWillReceiveProps: function(nextProps) {
+                console.log(nextProps);
+                if (nextProps.appendToMessage !== null) {
+                    this.state.message += nextProps.appendToMessage;
+                    this.setState(this.state);
+                    this.props.clearAppendedMessage();
+                }
+                if (this.props.user.id !== nextProps.user.id) {
+                    this.state.message = '';
+                    this.setState(this.state);
+                }
             },
             render: function() {
                 var status = this.props.connectionStatus;
@@ -215,6 +224,10 @@ $(function() {
 
 
         var Info = React.createClass({
+            ccLinkClick: function(e) {
+                e.preventDefault();
+                this.props.ccLinkFunction();
+            },
             render: function() {
                 return (
                     <div className="info">
@@ -227,6 +240,11 @@ $(function() {
                             <label htmlFor="amount">Charge</label>
                             <input type="number" id="amount" className="u-full-width" />
                             <input type="submit" value="charge" />
+                            <hr />
+                            <button 
+                                className="button" 
+                                onClick={this.ccLinkClick}
+                            >Credit Card Link</button>
                         </form>
                     </div>
                 );
@@ -281,8 +299,19 @@ $(function() {
                     users: window.users,
                     user: window.user,
                     connectionStatus: "Connecting...",
-                    sendingStatus: null
+                    sendingStatus: null,
+                    appendToMessage: null
                 };
+            },
+            ccLinkClick: function() {
+                this.state.appendToMessage = 
+                    "https://" + window.host + 
+                    "/users/" + window.user.phoneNumber + "/cc/";
+                this.setState(this.state);
+            },
+            clearAppendedMessage: function() {
+                this.state.appendToMessage = null;
+                this.setState(this.state);
             },
             messageSubmit: function(message) {
                 this.state.sendingStatus = "Sending message";
@@ -290,7 +319,6 @@ $(function() {
                 sendMessage(message);
             },
             render: function() {
-                console.log(this.state);
                 var footer;
                 if (magician.isAdmin) {
                     footer = (
@@ -324,12 +352,15 @@ $(function() {
                         <Messages 
                             user={this.state.user}
                             messageSubmit={this.messageSubmit}
+                            appendToMessage={this.state.appendToMessage}
                             sendingStatus={this.state.sendingStatus}
                             connectionStatus={this.state.connectionStatus}
+                            clearAppendedMessage={this.clearAppendedMessage}
                         />
                         <Info 
                             user={this.state.user}
                             userFormSubmit={this.userFormSubmit}
+                            ccLinkFunction={this.ccLinkClick}
                         />
                     </div>
                 );
